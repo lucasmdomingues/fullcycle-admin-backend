@@ -17,7 +17,7 @@
     /* Type checking */
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "strictNullChecks": false,
 
     /* Interop */
     "esModuleInterop": true,
@@ -26,7 +26,9 @@
     /* Build */
     "noEmit": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "include": ["src"]
 }

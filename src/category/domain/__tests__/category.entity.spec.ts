@@ -1,7 +1,14 @@
+import { EntityValidationError } from "../../../shared/domain/validators/validation.error.js";
 import { UUID } from "../../../shared/domain/value-objects/uuid.vo.js";
 import { Category } from "../category.entity.js";
 
 describe("Category Unit Tests", () => {
+  let validateSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    validateSpy = jest.spyOn(Category, "validate");
+  });
+
   describe("should create a category using constructor", () => {
     test("should create a category with only name", () => {
       const category = new Category({
@@ -70,6 +77,7 @@ describe("Category Unit Tests", () => {
       expect(category.description).toBeNull();
       expect(category.is_active).toBeTruthy();
       expect(category.created_at).toBeInstanceOf(Date);
+      expect(validateSpy).toHaveBeenCalled();
     });
   });
 
@@ -81,6 +89,7 @@ describe("Category Unit Tests", () => {
 
       category.changeName("Documentary");
       expect(category.name).toBe("Documentary");
+      expect(validateSpy).toHaveBeenCalled();
     });
 
     test("should change description", () => {
@@ -91,10 +100,11 @@ describe("Category Unit Tests", () => {
 
       category.changeDescription("new description");
       expect(category.description).toBe("new description");
+      expect(validateSpy).toHaveBeenCalled();
     });
   });
 
-  describe("category id filed", () => {
+  describe("category id field", () => {
     const arrange = [{ id: null }, { id: undefined }, { id: new UUID() }];
 
     test.each(arrange)("when id is %j", ({ id }) => {
@@ -107,6 +117,14 @@ describe("Category Unit Tests", () => {
       if (id) {
         expect(category.category_id).toBe(id);
       }
+    });
+  });
+});
+
+describe("Category Validator", () => {
+  describe("create command", () => {
+    test("should throw ValidationEntityError when name is empty", () => {
+      expect(() => Category.create({ name: "" })).toThrow(EntityValidationError);
     });
   });
 });
