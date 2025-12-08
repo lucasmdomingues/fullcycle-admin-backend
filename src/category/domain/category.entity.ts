@@ -1,5 +1,7 @@
+import { UUID } from "../../shared/domain/value-objects/uuid.vo.js";
+
 export type CategoryConstructorParams = {
-  category_id?: string;
+  category_id?: UUID;
   name: string;
   description?: string | null;
   is_active?: boolean;
@@ -13,14 +15,14 @@ export type CategoryCreateCommand = {
 };
 
 export class Category {
-  category_id: string;
+  category_id: UUID;
   name: string;
   description: string | null;
   is_active: boolean;
   created_at: Date;
 
   constructor(params: CategoryConstructorParams) {
-    this.category_id = params.category_id ?? "";
+    this.category_id = params.category_id ?? new UUID();
     this.name = params.name;
     this.description = params.description ?? null;
     this.is_active = params.is_active ?? true;

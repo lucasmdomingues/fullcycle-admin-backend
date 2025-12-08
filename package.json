@@ -16,8 +16,14 @@
     "@swc/core": "^1.15.3",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.21",
+    "@types/uuid": "^10.0.0",
     "jest": "^30.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "uuid": "^13.0.0"
   }
 }
