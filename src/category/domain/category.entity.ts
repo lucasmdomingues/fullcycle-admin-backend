@@ -1,4 +1,6 @@
-import { ValidationEntityError } from "../../shared/domain/validators/validation.error.js";
+import { Entity } from "../../shared/domain/entity.js";
+import { EntityValidationError } from "../../shared/domain/validators/validation.error.js";
+import { ValueObject } from "../../shared/domain/value-object.js";
 import { UUID } from "../../shared/domain/value-objects/uuid.vo.js";
 import { CategoryValidatorFactory } from "./category.validator.js";
 
@@ -16,7 +18,7 @@ export type CategoryCreateCommand = {
   is_active?: boolean;
 };
 
-export class Category {
+export class Category extends Entity {
   category_id: UUID;
   name: string;
   description: string | null;
@@ -24,11 +26,16 @@ export class Category {
   created_at: Date;
 
   constructor(params: CategoryConstructorParams) {
+    super();
     this.category_id = params.category_id ?? new UUID();
     this.name = params.name;
     this.description = params.description ?? null;
     this.is_active = params.is_active ?? true;
     this.created_at = params.created_at ?? new Date();
+  }
+
+  get entity_id(): ValueObject {
+    return this.category_id;
   }
 
   static create(params: CategoryCreateCommand): Category {
@@ -58,7 +65,7 @@ export class Category {
   static validate(entity: Category): void {
     const validator = CategoryValidatorFactory.create();
     const isValid = validator.validate(entity);
-    if (!isValid) throw new ValidationEntityError(validator.errors);
+    if (!isValid) throw new EntityValidationError(validator.errors);
   }
 
   toJSON() {

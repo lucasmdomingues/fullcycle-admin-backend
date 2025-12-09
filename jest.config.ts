@@ -37,4 +37,8 @@ export default {
   },
 
   testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+
+  setupFilesAfterEnv: [
+    "<rootDir>/src/shared/infra/testing/expect-helpers.ts"
+  ],
 };

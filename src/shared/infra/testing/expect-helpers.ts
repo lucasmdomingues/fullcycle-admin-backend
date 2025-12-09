@@ -3,11 +3,14 @@ import { EntityValidationError } from "../../domain/validators/validation.error.
 import { FieldsErrors } from "../../domain/validators/validator-fields.interface.js";
 
 type Expected =
-  | { validator: ClassValidatorFields<any>; data: any }
+  | {
+      validator: ClassValidatorFields<any>;
+      data: any;
+    }
   | (() => any);
 
 expect.extend({
-  containsErrorMessage(expected: any, received: FieldsErrors) {
+  containsErrorMessage(expected: Expected, received: FieldsErrors) {
     if (typeof expected === "function") {
       try {
         expected();
