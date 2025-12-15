@@ -14,6 +14,10 @@ export class UUID extends ValueObject {
     const isValid = uuidValidate(this.id);
     if (!isValid) throw new UUIDInvalidError();
   }
+
+  toString(): string {
+    return this.id;
+  }
 }
 
 export class UUIDInvalidError extends Error {
