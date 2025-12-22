@@ -2,6 +2,7 @@ import { Entity } from "../../shared/domain/entity.js";
 import { EntityValidationError } from "../../shared/domain/validators/validation.error.js";
 import { ValueObject } from "../../shared/domain/value-object.js";
 import { UUID } from "../../shared/domain/value-objects/uuid.vo.js";
+import { CategoryFakeBuilder } from "./category-fake.builder.js";
 import { CategoryValidatorFactory } from "./category.validator.js";
 
 export type CategoryConstructorParams = {
@@ -66,6 +67,10 @@ export class Category extends Entity {
     const validator = CategoryValidatorFactory.create();
     const isValid = validator.validate(entity);
     if (!isValid) throw new EntityValidationError(validator.errors);
+  }
+
+  static fake(){
+    return CategoryFakeBuilder
   }
 
   toJSON() {
